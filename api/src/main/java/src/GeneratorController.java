@@ -1,21 +1,19 @@
 package src;
 
 import com.google.gson.Gson;
+import dto.PwdInfosDTO;
 import dto.ResponseDTO;
+import src.service.GeneratorService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/pwd")
-public class Generator {
+public class GeneratorController {
 
-    private static final String uAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String lAlphabet = "abcdefghijklmnopqrstuvwxyz";
-    private static final String sNumbers = "1234567890";
-    private static final String sSymbols = "!@#$%&*+_-<>";
+    private GeneratorService service;
 
     @GET
     @Path("generator")
@@ -25,11 +23,20 @@ public class Generator {
         Gson gson = new Gson();
 
         try {
+
             responseDTO.setStatus(200);
             responseDTO.setDescription("Funfou");
             return Response.status(200).entity(gson.toJson(responseDTO)).build();
         } catch (Exception ex) {
-            return Response.status(500).entity("Create ENUM for exceptions :)").build();
+            return Response.status(500).entity(ex.getMessage()).build();
         }
+    }
+
+    @POST
+    @Path("test")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response test(PwdInfosDTO dto) {
+        return Response.ok().entity(dto).build();
     }
 }
