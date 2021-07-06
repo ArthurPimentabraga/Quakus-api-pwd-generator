@@ -4,12 +4,18 @@ import com.google.gson.Gson;
 import dto.PwdInfosDTO;
 import dto.ResponseDTO;
 import lombok.extern.java.Log;
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import src.service.GeneratorService;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.validation.Valid;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 @Path("/pwd")
 @Log
@@ -31,5 +37,13 @@ public class GeneratorController {
         } catch (Exception ex) {
             return Response.status(500).entity(ex.getMessage()).build();
         }
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/generator/teste/{name}")
+    public String greeting(@PathParam String name) {
+        log.severe("asdasd");
+        return name;
     }
 }
